@@ -66,6 +66,7 @@ export default class Checkout extends React.Component {
     tax = parseFloat(tax);
 
     total2 = total1 + tax;
+    total2 = total2.toFixed(2);
 
     this.setState({
       total: total1,
