@@ -17,11 +17,13 @@ export default function CartSummary(props) {
         total += currency;
       }
       total = total.toFixed(2);
+      var totalItems = renderItems.length;
 
       return <div>
         <button onClick={() => props.setView('catalog', { productId: {} })} className="backButton btn btn-secondary"><i className="fas fa-arrow-left"></i> Back</button>
         {renderItems}
         <div className="total mb-2 mt-3 d-flex justify-content-center font-weight-bold">Total: ${total}</div>
+        <div className="total mb-2 d-flex justify-content-center font-weight-bold">Items: {totalItems}</div>
         <div className="d-flex justify-content-center">
           <button onClick={() => props.setView('checkout', { productId: {} })} className="btn btn-warning shadow p-2 rounded mb-3">Process to Checkout</button>
         </div>
