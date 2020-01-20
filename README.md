@@ -5,8 +5,7 @@ A full stack LAMP & React shopping cart app to shop from your neighbors.
 - React.js
 - Webpack 4
 - Bootstrap 4
-- Material UI/core
-- Material UI/icons
+- Icons from fontawesome
 - PHP
 - mySQL
 - HTML5
