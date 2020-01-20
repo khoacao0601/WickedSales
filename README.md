@@ -1,4 +1,4 @@
-# Fresh and Used Items from your Neighbor market
+# Fresh and Used Items from your Neighbors
 A full stack LAMP & React shopping cart app to shop from your neighbors. 
 
 # Technologies Used
