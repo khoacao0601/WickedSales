@@ -31,13 +31,13 @@ Try the application live at https://neighbormarket.khoacao.com
 ![Alt Text](https://github.com/khoacao0601/WickedSales/blob/master/wicked-sales.gif)
 
 ## Initial Setup
-Fork this repo and clone your fork from the terminal.
-$ git clone https://github.com/khoacao0601/WickedSales.git
-Navigate into the cloned directory and install the necessary dependencies.
-$ npm install
-Start a dev environment with access to Apache and MySQL and:
-Check that port is directed to 5000
-Check that the root directory of the server is set to the public folder
-Initiate the dev server
-$ npm run dev
-Go to localhost:5000 and enjoy 
+1. Fork this repo and clone your fork from the terminal.
+`$ git clone https://github.com/khoacao0601/WickedSales.git`
+2. Navigate into the cloned directory and install the necessary dependencies.
+`$ npm install`
+3. Start a dev environment with access to Apache and MySQL and:
+- Check that port is directed to 5000
+- Check that the root directory of the server is set to the public folder
+- Initiate the dev server
+`$ npm run dev`
+- Go to localhost:5000 and enjoy 
