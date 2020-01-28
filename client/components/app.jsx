@@ -5,6 +5,7 @@ import ProductDetails from './product-details';
 import CartSummary from './cartSummary';
 import Checkout from './checkout';
 import Thankyou from './thankyou';
+import Footer from './footer';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -45,6 +46,7 @@ export default class App extends React.Component {
         <div>
           <Header cartItemCount={this.state.cart.length} setView={this.setView} />
           <ProductList setView={this.setView} addItems={this.addToCart}/>
+          <Footer />
         </div>
       );
     } else if (this.state.view.name === 'details') {
