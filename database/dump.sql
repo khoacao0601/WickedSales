@@ -1,7 +1,7 @@
-DROP TABLE `cartItems`;
+/* DROP TABLE `cartItems`;
 DROP TABLE `carts`;
 DROP TABLE `orders`;
-DROP TABLE `products`;
+DROP TABLE `products`; */
 -- phpMyAdmin SQL Dump
 -- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
