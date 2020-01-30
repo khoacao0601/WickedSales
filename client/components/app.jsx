@@ -68,6 +68,7 @@ export default class App extends React.Component {
         <div>
           <Header cartItemCount={this.state.cart.length} setView={this.setView}/>
           <Checkout setView={this.setView} setEmptyCart={this.setEmptyCart} item={this.state.cart}/>
+          <Footer />
         </div>
       );
     } else if (this.state.view.name === 'thankyou') {
@@ -75,6 +76,7 @@ export default class App extends React.Component {
         <div>
           <Header cartItemCount={this.state.cart.length} setView={this.setView}/>
           <Thankyou setView={this.setView}/>
+          <Footer />
         </div>
       );
     }
@@ -104,7 +106,7 @@ export default class App extends React.Component {
       headers: { 'Content-Type': 'application/json' }
     })
       .then(response => response.json())
-      .then(data => this.setState({ cart: data }));
+      .then(data => this.setState({ cart: data }, () => console.log(this.state.cart)));
   }
 
   render() {
