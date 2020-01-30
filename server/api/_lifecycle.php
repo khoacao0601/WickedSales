@@ -72,7 +72,7 @@ set_exception_handler(function ($error) {
   send($response);
 });
 
-register_shutdown_function(function () {
+/* register_shutdown_function(function () {
   $error = error_get_last();
   if (headers_sent() || $error === null) return;
   $response = [
@@ -86,3 +86,4 @@ register_shutdown_function(function () {
   ];
   send($response);
 });
+ */
