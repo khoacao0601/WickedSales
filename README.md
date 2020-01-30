@@ -13,7 +13,7 @@ A full stack LAMP & React shopping cart app to shop from your neighbors.
 - AWS EC2
 
 # Live Demo
-Try the application live at https://neighbormarket.khoacao.com
+Try the application live at https://wickedsales.khoacao.com
 
 # Features
 - Users can view a product lists.
