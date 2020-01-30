@@ -106,7 +106,7 @@ export default class App extends React.Component {
       headers: { 'Content-Type': 'application/json' }
     })
       .then(response => response.json())
-      .then(data => this.setState({ cart: data }, () => console.log(this.state.cart)));
+      .then(data => this.setState({ cart: data }));
   }
 
   render() {

@@ -123,7 +123,7 @@ export default class Checkout extends React.Component {
           <button onClick={this.back} className="d-block btn btn-outline-dark"><i className="far fa-arrow-alt-circle-left fa-lg"></i> Back to Cart</button>
         </div>
         <div className="d-flex justify-content-center mt-3">
-          <button onClick={this.checkEmpty} className="btn btn-outline-success"><i className="fas fa-check"></i> Place Order</button>
+          <button onClick={this.checkEmpty} className="btn btn-outline-success mb-3"><i className="fas fa-check"></i> Place Order</button>
         </div>
       </div>
     );
