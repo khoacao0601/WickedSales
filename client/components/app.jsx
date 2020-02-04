@@ -60,7 +60,7 @@ export default class App extends React.Component {
       return (
         <div>
           <Header cartItemCount={this.state.cart.length} setView={this.setView}/>
-          <CartSummary item={this.state.cart} setView={this.setView} remove={this.removeItems}/>
+          <CartSummary item={this.state.cart} setView={this.setView} remove={this.removeItems} addItems={this.addToCart}/>
         </div>
       );
     } else if (this.state.view.name === 'checkout') {

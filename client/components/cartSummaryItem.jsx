@@ -8,6 +8,10 @@ export default function CartSummaryItem(props) {
     return props.remove(props.item.cartItemId);
   }
 
+  function addOne() {
+    return props.addItem(props.item);
+  }
+
   return (
     <div className="d-flex justify-content-center">
       <div className="cartItem border border-dark mt-2 w-50 p-3 rounded-lg">
@@ -16,7 +20,11 @@ export default function CartSummaryItem(props) {
         <div className="font-italic">${currency}</div>
         <div>{props.item.shortDescription}</div>
         <div className="d-flex justify-content-center mt-3">
-          <button onClick={deleteOne} className="remove btn btn-danger">Remove</button>
+          <div>
+            <button onClick={addOne} className="remove btn btn-danger">+</button>
+            {props.item.quanity}
+            <button onClick={deleteOne} className="remove btn btn-danger">-</button>
+          </div>
         </div>
       </div>
     </div>
