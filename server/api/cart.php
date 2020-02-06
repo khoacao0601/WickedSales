@@ -1,10 +1,12 @@
 <?php 
 
+    $last_ID_intoCart = null;
+
    if ($request['method'] === 'GET') {
         if(isset($_SESSION['cart_id'])){
             $link = get_db_link();
             $sqlCart = 
-        "SELECT * FROM products JOIN cartItems ON products.productId = cartItems.productId WHERE cartItems.cartId = {$_SESSION['cart_id']}";
+        "SELECT * FROM cartItems JOIN products ON cartItems.productId = products.productId WHERE cartItems.cartId = {$_SESSION['cart_id']}";
         $resultCart = mysqli_query($link,$sqlCart);
         $fetch_Cart = mysqli_fetch_all($resultCart, MYSQLI_ASSOC);
         $response['body']= $fetch_Cart;
@@ -69,11 +71,11 @@
         } else {
             $link = get_db_link();
             $cartItemID = intval($request['query']['cartItemId']);
-            $sqlRemove = "DELETE FROM `cartItems` WHERE `cartItemId` = {$cartItemID}";
+            $sqlRemove = "DELETE FROM `cartItems` WHERE `cartItemId` = {$cartItemID}"; 
             $removeItem = mysqli_query($link,$sqlRemove);
             $fetch_remove = mysqli_fetch_all($removeItem, MYSQLI_ASSOC);
 
-            $sqlUpdate = "SELECT * FROM products JOIN cartItems ON products.productId = cartItems.productId WHERE cartItems.cartId = {$_SESSION['cart_id']}";
+            $sqlUpdate = "SELECT * FROM cartItems JOIN products ON cartItems.productId = products.productId WHERE cartItems.cartId = {$_SESSION['cart_id']}";
             $updateCart = mysqli_query($link,$sqlUpdate);
             $fetch_upadte = mysqli_fetch_all($updateCart, MYSQLI_ASSOC);
             $response['body']= $fetch_upadte;

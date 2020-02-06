@@ -14,20 +14,55 @@ export default class CartSummary extends React.Component {
     var itemInCart = [];
     var productIdArr = [];
     var arrayToMap = [];
-    console.log(this.props);
+    var checkPointNumber = [];
+    var checkPoint = [];
+
+    /* var checkPointNumber = [];
+    var checkPoint = [];
+    debugger;
+    checkPoint.push(this.props.item[0]);
+    checkPointNumber.push(this.props.item[0].productId);
+    for (let i = 1; i < this.props.item.length; i++) {
+      var number = checkPointNumber.indexOf(this.props.item[i].productId);
+      if (checkPointNumber.indexOf(this.props.item[i].productId) !== -1) {
+        checkPointNumber.push(this.props.item[i].productId);
+        checkPoint.push(this.props.item[i]);
+      } else {
+        checkPoint.push(this.props.item[i]);
+      }
+    }
+ */
     for (let i = 0; i < this.props.item.length; i++) {
       itemInCart.push(this.props.item[i]);
     }
+
     for (let i = 0; i < itemInCart.length; i++) {
-      var repeat = productIdArr.indexOf(itemInCart[i].productId);
-      if (productIdArr.indexOf(itemInCart[i].productId) === -1) {
-        productIdArr.push(itemInCart[i].productId);
-        itemInCart[i].quanity = 1;
-        arrayToMap.push(itemInCart[i]);
+      var check = checkPointNumber.indexOf(itemInCart[i].productId);
+      if (checkPointNumber.indexOf(itemInCart[i].productId) === -1) {
+        checkPointNumber.push(itemInCart[i].productId);
+        checkPoint.push(itemInCart[i]);
+      } else {
+        var add = itemInCart[i];
+        checkPoint.splice(check, 0, add);
+        checkPointNumber.splice(check, 0, itemInCart[i].productId);
+      }
+    }
+
+    for (let i = 0; i < checkPoint.length; i++) {
+      var repeat = productIdArr.indexOf(checkPoint[i].productId);
+      if (productIdArr.indexOf(checkPoint[i].productId) === -1) {
+        productIdArr.push(checkPoint[i].productId);
+        checkPoint[i].quanity = 1;
+        arrayToMap.push(checkPoint[i]);
       } else {
         ++arrayToMap[repeat].quanity;
       }
     }
+
+    console.log(arrayToMap);
+    console.log(this.props);
+    console.log(itemInCart);
+    console.log(checkPoint);
     return arrayToMap;
   }
 
