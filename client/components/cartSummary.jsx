@@ -17,21 +17,6 @@ export default class CartSummary extends React.Component {
     var checkPointNumber = [];
     var checkPoint = [];
 
-    /* var checkPointNumber = [];
-    var checkPoint = [];
-    debugger;
-    checkPoint.push(this.props.item[0]);
-    checkPointNumber.push(this.props.item[0].productId);
-    for (let i = 1; i < this.props.item.length; i++) {
-      var number = checkPointNumber.indexOf(this.props.item[i].productId);
-      if (checkPointNumber.indexOf(this.props.item[i].productId) !== -1) {
-        checkPointNumber.push(this.props.item[i].productId);
-        checkPoint.push(this.props.item[i]);
-      } else {
-        checkPoint.push(this.props.item[i]);
-      }
-    }
- */
     for (let i = 0; i < this.props.item.length; i++) {
       itemInCart.push(this.props.item[i]);
     }
@@ -59,10 +44,6 @@ export default class CartSummary extends React.Component {
       }
     }
 
-    console.log(arrayToMap);
-    console.log(this.props);
-    console.log(itemInCart);
-    console.log(checkPoint);
     return arrayToMap;
   }
 
@@ -74,7 +55,7 @@ export default class CartSummary extends React.Component {
       </div>;
     } else {
       var arrayToMap = this.arrayToRend();
-      const renderItems = arrayToMap.map((item, index) => <CartSummaryItem key={index} item={item} remove={this.props.remove} addItem={this.props.addItems}/>);
+      const renderItems = arrayToMap.map((item, index) => <CartSummaryItem key={index} item={item} remove={this.props.remove} addItem={this.props.addItems} removeAll={this.props.removeAll}/>);
       var total = null;
       for (var count = 0; count < this.props.item.length; count++) {
         var currency = this.props.item[count].price / 100;
@@ -90,7 +71,6 @@ export default class CartSummary extends React.Component {
         <div className="total mb-2 d-flex justify-content-center font-weight-bold">Items: {totalItems}</div>
         <div className="d-flex justify-content-center">
           <button onClick={() => this.props.setView('checkout')} className="btn btn-warning shadow p-2 rounded mb-3">Process to Checkout</button>
-          <button onClick={this.arrayToRend} className="btn btn-warning shadow p-2 rounded mb-3">Console.log</button>
         </div>
       </div>;
     }

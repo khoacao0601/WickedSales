@@ -64,16 +64,28 @@
     }  
 
     if($request['method'] === 'DELETE') {
-        if(!isset($request['query']['cartItemId'])){
-            throw new ApiError("Require cartItemId", 400);
+        if(!isset($request['query']['cartItemId']) && !isset($request['query']['productId'])){
+            throw new ApiError("Require cartItemId or productId", 400);
             $response['query'] = [];
             send($response);
-        } else {
+        } elseif (isset($request['query']['cartItemId'])){
             $link = get_db_link();
             $cartItemID = intval($request['query']['cartItemId']);
             $sqlRemove = "DELETE FROM `cartItems` WHERE `cartItemId` = {$cartItemID}"; 
             $removeItem = mysqli_query($link,$sqlRemove);
             $fetch_remove = mysqli_fetch_all($removeItem, MYSQLI_ASSOC);
+
+            $sqlUpdate = "SELECT * FROM cartItems JOIN products ON cartItems.productId = products.productId WHERE cartItems.cartId = {$_SESSION['cart_id']}";
+            $updateCart = mysqli_query($link,$sqlUpdate);
+            $fetch_upadte = mysqli_fetch_all($updateCart, MYSQLI_ASSOC);
+            $response['body']= $fetch_upadte;
+            send($response);
+        } elseif (isset($request['query']['productId'])){
+            $link = get_db_link();
+            $productsId= intval($request['query']['productId']);
+            $sqlRemoveAll = "DELETE FROM `cartItems` WHERE `productId` = {$productsId}"; 
+            $removeAllItem = mysqli_query($link,$sqlRemoveAll);
+            $fetch_removeAll = mysqli_fetch_all($removeAllItem, MYSQLI_ASSOC);
 
             $sqlUpdate = "SELECT * FROM cartItems JOIN products ON cartItems.productId = products.productId WHERE cartItems.cartId = {$_SESSION['cart_id']}";
             $updateCart = mysqli_query($link,$sqlUpdate);

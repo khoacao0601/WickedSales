@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Footer() {
   return (
-    <div className="mt-5 pt-5 pb-5 footer">
+    <div className="footer mt-5 pt-5 pb-5">
       <div className="container">
         <div className="row">
           <div className="col-lg-5 col-xs-12 about-company">
@@ -24,8 +24,8 @@ export default function Footer() {
           <div className="col-lg-4 col-xs-12 location">
             <h4 className="mt-lg-0 mt-sm-4">Location</h4>
             <p>22, Lorem ipsum dolor, consectetur adipiscing</p>
-            <p className="mb-0"><i className="fa fa-phone mr-3"></i>(541) 754-3010</p>
-            <p><i className="fa fa-envelope-o mr-3"></i>info@hsdf.com</p>
+            <p className="mb-0"><i className="fa fa-phone mr-3"></i>(***) 754-30**</p>
+            <p><i className="fa fa-envelope-o mr-3"></i>info@***.com</p>
           </div>
         </div>
         <div className="row mt-5">
