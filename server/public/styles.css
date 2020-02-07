@@ -102,3 +102,25 @@ div.short {
 } 
 
 
+/* Cart Summary Items */
+.removeAll {
+    color: blue;
+}
+.removeAll:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.empty {
+    height: 371px;
+}
+
+/*  Hover Zoom */
+.hoverZoom:hover {
+    transform: scale(1.1); 
+  }
+
+.cartIcon:hover {
+    cursor: pointer;
+}
+

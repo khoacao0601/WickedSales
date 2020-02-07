@@ -7,6 +7,7 @@ export default function Thankyou(props) {
         <h2>Thank you for your order</h2>
       </div>
       <div className="d-flex justify-content-center" onClick={() => props.setView('catalog')}>Continue Shopping</div>
+      <diV className="empty"></diV>
     </div>
   );
 }
