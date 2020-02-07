@@ -12,6 +12,10 @@ export default function CartSummaryItem(props) {
     return props.addItem(props.item);
   }
 
+  function removeAll() {
+    return props.removeAll(props.item.productId);
+  }
+
   return (
     <div className="d-flex justify-content-center">
       <div className="cartItem border border-dark mt-2 w-50 p-3 rounded-lg">
@@ -20,11 +24,17 @@ export default function CartSummaryItem(props) {
         <div className="font-italic">${currency}</div>
         <div>{props.item.shortDescription}</div>
         <div className="d-flex justify-content-center mt-3">
-          <div>
-            <button onClick={addOne} className="remove btn btn-danger">+</button>
-            {props.item.quanity}
-            <button onClick={deleteOne} className="remove btn btn-danger">-</button>
+          <div className="d-flex align-items-center ml-3 mr-3 font-weight-bold">Quantity:</div>
+          <div className="border d-flex justify-content-around">
+            <button onClick={addOne} className="btn btn-outline-danger w-50">+</button>
+            <div className="d-flex align-items-center ml-3 mr-3">
+              {props.item.quanity}
+            </div>
+            <button onClick={deleteOne} className="btn btn-outline-danger w-50">-</button>
           </div>
+        </div>
+        <div className="d-flex justify-content-end">
+          <div className="removeAll" onClick={removeAll}>Remove</div>
         </div>
       </div>
     </div>

@@ -21,6 +21,7 @@ export default class App extends React.Component {
     this.addToCart = this.addToCart.bind(this);
     this.setEmptyCart = this.setEmptyCart.bind(this);
     this.removeItems = this.removeItems.bind(this);
+    this.removeAll = this.removeAll.bind(this);
   }
 
   componentDidMount() {
@@ -60,7 +61,7 @@ export default class App extends React.Component {
       return (
         <div>
           <Header cartItemCount={this.state.cart.length} setView={this.setView}/>
-          <CartSummary item={this.state.cart} setView={this.setView} remove={this.removeItems} addItems={this.addToCart}/>
+          <CartSummary item={this.state.cart} setView={this.setView} remove={this.removeItems} addItems={this.addToCart} removeAll={this.removeAll}/>
         </div>
       );
     } else if (this.state.view.name === 'checkout') {
@@ -102,6 +103,15 @@ export default class App extends React.Component {
 
   removeItems(itemId) {
     fetch('/api/cart?cartItemId=' + itemId, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(response => response.json())
+      .then(data => this.setState({ cart: data }));
+  }
+
+  removeAll(itemId) {
+    fetch('/api/cart?productId=' + itemId, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' }
     })
