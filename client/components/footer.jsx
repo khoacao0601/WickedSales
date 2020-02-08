@@ -6,19 +6,16 @@ export default function Footer() {
       <div className="container">
         <div className="row">
           <div className="col-lg-5 col-xs-12 about-company">
-            <h2>Heading</h2>
-            <p className="pr-5 text-white-50">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac ante mollis quam tristique convallis </p>
-            <p><a href="#"><i className="fab fa-facebook-square"></i></a> <a href="#"><i className="fab fa-linkedin"></i></a></p>
+            <h2>Neighbor Market</h2>
+            <p className="pr-5 text-white-50">This is a farmer market online with fruits, vegetable and used things from yours neighbor. </p>
+            <p><a href="#" target="-blank"><i className="fab fa-facebook-square"></i></a> <a href="#" target="-blank"><i className="fab fa-linkedin"></i></a></p>
           </div>
           <div className="col-lg-3 col-xs-12 links">
             <h4 className="mt-lg-0 mt-sm-3">Links</h4>
             <ul className="m-0 p-0">
-              <li>- <a href="#">Lorem ipsum</a></li>
-              <li>- <a href="#">Nam mauris velit</a></li>
-              <li>- <a href="#">Etiam vitae mauris</a></li>
-              <li>- <a href="#">Fusce scelerisque</a></li>
-              <li>- <a href="#">Sed faucibus</a></li>
-              <li>- <a href="#">Mauris efficitur nulla</a></li>
+              <li>- <a href="https://www.localfarmmarkets.org/" target="-blank">Farmer Market</a></li>
+              <li>- <a href="#" target="-blank">Nam mauris velit</a></li>
+              <li>- <a href="#" target="-blank">Etiam vitae mauris</a></li>
             </ul>
           </div>
           <div className="col-lg-4 col-xs-12 location">
