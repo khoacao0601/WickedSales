@@ -51,7 +51,6 @@ export default class CartSummary extends React.Component {
     if (this.props.item.length === 0) {
       return <div className="d-flex justify-content-center">
         <h1 className="font-italic">Empty Cart</h1>
-        <button onClick={() => this.props.setView('catalog', { productId: {} })} className="backButton btn btn-secondary"><i className="fas fa-arrow-left"></i> Back</button>
       </div>;
     } else {
       var arrayToMap = this.arrayToRend();
@@ -65,7 +64,6 @@ export default class CartSummary extends React.Component {
       var totalItems = this.props.item.length;
 
       return <div>
-        <button onClick={() => this.props.setView('catalog')} className="backButton btn btn-secondary"><i className="fas fa-arrow-left"></i> Back</button>
         {renderItems}
         <div className="total mb-2 mt-3 d-flex justify-content-center font-weight-bold">Total: ${total}</div>
         <div className="total mb-2 d-flex justify-content-center font-weight-bold">Items: {totalItems}</div>
@@ -79,7 +77,13 @@ export default class CartSummary extends React.Component {
   render() {
     return (
       <div>
-        <h2 className="d-flex justify-content-center mt-3 font-weight-bold">Cart</h2>
+        <div className="container">
+          <div className="row">
+            <i className="far fa-arrow-alt-circle-left backButton col d-flex justify-content-center align-items-center" onClick={() => this.props.setView('catalog')}>Back to Catalog</i>
+            <h2 className="font-weight-bold myCart col d-flex justify-content-center">Cart</h2>
+            <div className="col"></div>
+          </div>
+        </div>
         <div>{this.checkEmptyCart()}</div>
       </div>
     );

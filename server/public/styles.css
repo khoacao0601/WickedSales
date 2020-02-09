@@ -45,11 +45,6 @@
     height: 150px;
 }
 
-.backButton {
-    position: fixed;
-    top: 20%;
-    left: 5%;
-}
 
 div.short {
     white-space: nowrap; 
@@ -123,4 +118,13 @@ div.short {
 .cartIcon:hover {
     cursor: pointer;
 }
+
+/**My Cart**/
+
+.backButton:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+
 

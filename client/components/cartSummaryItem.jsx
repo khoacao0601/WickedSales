@@ -23,14 +23,16 @@ export default function CartSummaryItem(props) {
         <div className="center-block font-weight-bold">{props.item.name}</div>
         <div className="font-italic">${currency}</div>
         <div>{props.item.shortDescription}</div>
-        <div className="d-flex justify-content-center mt-3">
-          <div className="d-flex align-items-center ml-3 mr-3 font-weight-bold">Quantity:</div>
-          <div className="border d-flex justify-content-around">
-            <button onClick={addOne} className="btn btn-outline-danger w-50">+</button>
-            <div className="d-flex align-items-center ml-3 mr-3">
-              {props.item.quanity}
+        <div className="d-flex justify-content-center">
+          <div className="d-inline-block justify-content-center mt-3">
+            <div className="d-flex align-items-center mr-1 font-weight-bold">Quantity: </div>
+            <div className="border d-flex justify-content-around mt-1">
+              <button onClick={addOne} className="btn btn-outline-danger w-50">+</button>
+              <div className="d-flex align-items-center ml-3 mr-3">
+                {props.item.quanity}
+              </div>
+              <button onClick={deleteOne} className="btn btn-outline-danger w-50">-</button>
             </div>
-            <button onClick={deleteOne} className="btn btn-outline-danger w-50">-</button>
           </div>
         </div>
         <div className="d-flex justify-content-end">
