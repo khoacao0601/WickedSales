@@ -12,5 +12,5 @@ if ($request['method'] === 'GET') {
 function check_connection($link) {
   $sql = 'select 1';
   $link->query($sql);
-  return 'Successfully connected to MySQL!';
+  return 'Successfully connected to MySQL! 5000';
 }

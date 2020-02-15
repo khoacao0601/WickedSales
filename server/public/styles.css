@@ -126,5 +126,21 @@ div.short {
     transform: scale(1.1);
 }
 
+.back {
+    font-weight: bold;
+    color:lightgray;
+}
+
+.back:hover {
+    font-weight: bold;
+    color: black;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.continue:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 
