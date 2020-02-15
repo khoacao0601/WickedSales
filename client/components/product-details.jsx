@@ -24,10 +24,10 @@ export default class ProductDetails extends React.Component {
           <i className="fas fa-arrow-circle-left fa-lg"></i>
           Back to catalog
         </div>
-        <img src={this.state.product.image} className="img-thumbnail"></img>
+        <img src={this.state.product.image} className="img-thumbnail ml-5"></img>
         <h3>{this.state.product.name}</h3>
         <h5>${currency}</h5>
-        <button className="btn btn-warning" onClick={() => this.props.addItems(this.state.product)}>Add to Cart</button>
+        <button className="btn btn-warning mb-1" onClick={() => this.props.addItems(this.state.product)}>Add to Cart</button>
         <p>{this.state.product.shortDescription}</p>
         <p>{this.state.product.longDescription}</p>
       </div>
