@@ -5,12 +5,23 @@ export default class Checkout extends React.Component {
     super(props);
     this.state = {
       name: '',
+      email: '',
+      phone: '',
       creditCard: '',
+      creditCardName: '',
+      month: '',
+      year: '',
+      cvv: '',
       shippingAddress: '',
+      suit: 'Fill in Form',
+      city: '',
+      state: '',
+      zipcode: '',
       status: '',
       total: '',
       finalTax: '',
-      finalTotal: ''
+      finalTotal: '',
+      disabled: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.checkEmpty = this.checkEmpty.bind(this);
@@ -35,20 +46,27 @@ export default class Checkout extends React.Component {
 
   checkEmpty() {
     event.preventDefault();
-    if (!this.state.name || !this.state.creditCard || !this.state.shippingAddress) {
-      return this.setState({ status: 'Please enter all the required fields *' });
+    if (this.state.name && this.state.email && this.state.phone && this.state.shippingAddress && this.state.city && this.state.state && this.state.zipcode && this.state.creditCardName && this.state.creditCard && this.state.month && this.state.year && this.state.cvv) {
+      this.setState({ disabled: '' });
+      this.setState({ suit: 'Place Order' });
     } else {
-      this.sendInfos();
+      this.setState({ disabled: 'disabled' });
+      this.setState({ suit: 'Fill in Form' });
     }
   }
 
-  handleChange() {
+  async handleChange() {
     const newState = { };
     newState[event.target.name] = event.target.value;
-    this.setState(newState);
+    await this.setState(newState);
+    this.checkEmpty();
   }
 
   componentDidMount() {
+    if (!this.state.name || !this.state.creditCard || !this.state.shippingAddress) {
+      this.setState({ disabled: 'disabled' });
+    }
+
     var total1 = null;
     var tax = null;
     var total2 = null;
@@ -88,20 +106,157 @@ export default class Checkout extends React.Component {
       <div>
         <h2 className="font-weight-bold d-flex justify-content-center mt-3">Checkout</h2>
         <div className="d-flex justify-content-center">
-          <div className="border border-dark rounded-lg col-xl-4 col-lg-3 col-md-4 col-sm-4 col-12 d-flex justify-content-center">
+          <div className="border border-dark rounded-lg col-xl-6 col-lg-11 col-md-11 col-sm-11 col-11 d-flex justify-content-center">
             <form onSubmit={this.checkEmpty}>
-              <h3 className="ml-5">Informations</h3>
-              <div className="form-group w-85 col-12">
-                <label><i className="fas fa-user"></i> Name: * </label>
-                <input type="text" className="form-control" placeholder="Your Name" name="name" value={this.state.name} onChange={this.handleChange}></input>
+              <hr></hr>
+              <h3 className="ml-5">Information</h3>
+              <div className="form-row">
+                <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                  <label><i className="fas fa-user"></i> Name: * </label>
+                  <input type="text" maxLength="65" className="form-control" placeholder="Your Name" name="name" value={this.state.name} onChange={this.handleChange}></input>
+                </div>
               </div>
-              <div className="form-group w-85 col-12">
-                <label><i className="far fa-credit-card"></i> Credit Card: * </label>
-                <input type="text" className="form-control" placeholder="Credit Card Number" name="creditCard" value={this.state.creditCard} onChange={this.handleChange}></input>
+              <div className="form-row">
+                <div className="form-group col-xl-6 col-lg-5 col-md-5 col-sm-5 col-12">
+                  <label><i className="fas fa-at"></i> Email: * </label>
+                  <input type="text" maxLength="254" className="form-control" placeholder="Your Email" name="email" value={this.state.email} onChange={this.handleChange}></input>
+                </div>
+                <div className="form-group col-xl-6 col-lg-5 col-md-5 col-sm-5 col-12">
+                  <label><i className="fas fa-phone"></i> Phone Number: * </label>
+                  <input type="tel" maxLength="11" className="form-control" placeholder="Your phone #" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                </div>
               </div>
-              <div className="form-group w-85 col-12">
-                <label><i className="fas fa-map-marked-alt"></i> Address: * </label>
-                <input type="text" className="form-control" placeholder="Address" name="shippingAddress" value={this.state.shippingAddress} onChange={this.handleChange}></input>
+              <div className="form-row">
+                <div className="form-group w-85 col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
+                  <label><i className="fas fa-map-marked-alt"></i> Address: * </label>
+                  <input type="text" className="form-control" placeholder="123 New St." name="shippingAddress" value={this.state.shippingAddress} onChange={this.handleChange}></input>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group w-85 col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
+                  <label><i className="fas fa-map-marked-alt"></i> Address 2: </label>
+                  <input type="text" className="form-control" placeholder="Apartment #" name="suit" value={this.state.suit} onChange={this.handleChange}></input>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group w-85 col-xl-6 col-lg-4 col-md-4 col-sm-4 col-12">
+                  <label><i className="fas fa-city"></i> City: * </label>
+                  <input type="text" className="form-control" placeholder="City" name="city" value={this.state.city} onChange={this.handleChange}></input>
+                </div>
+                <div className="form-group w-85 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12">
+                  <label><i className="fas fa-flag-usa"></i> State: * </label>
+                  <select type="text" className="form-control" placeholder="State" name="state" value={this.state.state} onChange={this.handleChange}>
+                    <option defaultValue >Choose State...</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                </div>
+                <div className="form-group w-85 col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
+                  <label><i className="fab fa-usps"></i> Zipcode: * </label>
+                  <input type="text" maxLength="5" className="form-control" placeholder="Zipcode" name="zipcode" value={this.state.zipcode} onChange={this.handleChange}></input>
+                </div>
+              </div>
+              <hr></hr>
+              <h3 className="ml-5">Payment</h3>
+              <div className="form-row">
+                <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                  <label><i className="fas fa-address-book"></i> Name on Card: * </label>
+                  <input type="text" className="form-control" placeholder="Name on Card" name="creditCardName" value={this.state.creditCardName} onChange={this.handleChange}></input>
+                </div>
+                <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                  <label><i className="far fa-credit-card"></i> Credit Card: * </label>
+                  <input type="text" className="form-control" placeholder="Credit Card Number" name="creditCard" value={this.state.creditCard} onChange={this.handleChange}></input>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-group w-85 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                  <label><i className="far fa-calendar-alt"></i> Month: * </label>
+                  <select type="text" className="form-control" placeholder="Credit Card Number" name="month" value={this.state.month} onChange={this.handleChange}>
+                    <option defaultValue>MM</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                  </select>
+                </div>
+                <div className="form-group w-85 col-xl-5 col-lg-4 col-md-4 col-sm-4 col-12">
+                  <label><i className="far fa-calendar-alt"></i> Year: * </label>
+                  <select type="text" className="form-control" placeholder="Credit Card Number" name="year" value={this.state.year} onChange={this.handleChange}>
+                    <option defaultValue>YYYY</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2029">2030</option>
+                  </select>
+                </div>
+                <div className="form-group w-85 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12">
+                  <label><i className="fas fa-unlock"></i> CVV: * </label>
+                  <input type="text" className="form-control" placeholder="CVV" name="cvv" value={this.state.cvv} onChange={this.handleChange}></input>
+                </div>
               </div>
               <p className="text-danger">* required</p>
               <div className="text-danger">{this.state.status}</div>
@@ -109,7 +264,7 @@ export default class Checkout extends React.Component {
           </div>
         </div>
         <div className="d-flex justify-content-center mt-3">
-          <div className="border border-dark rounded-lg col-xl-4 col-lg-3 col-md-4 col-sm-4 col-12">
+          <div className="border border-dark rounded-lg col-xl-6 col-lg-11 col-md-11 col-sm-11 col-11">
             <h2 className="d-flex justify-content-center">Summary</h2>
             <div className="d-flex justify-content-center">---------------------------</div>
             <div className="d-flex justify-content-center">Subtotal: ${this.state.total}</div>
@@ -123,7 +278,7 @@ export default class Checkout extends React.Component {
           <button onClick={this.back} className="d-block btn btn-outline-dark"><i className="far fa-arrow-alt-circle-left fa-lg"></i> Back to Cart</button>
         </div>
         <div className="d-flex justify-content-center mt-3">
-          <button onClick={this.checkEmpty} className="btn btn-outline-success mb-3"><i className="fas fa-check"></i> Place Order</button>
+          <button onClick={this.checkEmpty} className="btn btn-outline-success mb-3" disabled={this.state.disabled}><i className="fas fa-check"></i> {this.state.suit}</button>
         </div>
       </div>
     );
