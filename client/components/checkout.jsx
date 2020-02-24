@@ -58,90 +58,142 @@ export default class Checkout extends React.Component {
     this.props.setView('thankyou');
   }
 
-  checkEmpty() {
-    event.preventDefault();
+  async checkEmpty() {
+    debugger;
 
     if (this.state.name && this.state.email && this.state.phone && this.state.shippingAddress && this.state.city && this.state.state && this.state.zipcode && this.state.creditCardName && this.state.creditCard && this.state.month && this.state.year && this.state.cvv) {
-      this.setState({ disabled: '' });
-      this.setState({ orderButton: 'Place Order' });
+      if (this.state.year === 'YYYY' || this.state.state === 'Choose State...' || this.state.month === 'MM') {
+        await this.setState({ disabled: 'disabled' });
+        await this.setState({ orderButton: 'Fill in Form' });
+      } else {
+        await this.setState({ disabled: '' });
+        await this.setState({ orderButton: 'Place Order' });
+        await this.setState({ status: '' });
+      }
     } else {
-      this.setState({ disabled: 'disabled' });
-      this.setState({ orderButton: 'Fill in Form' });
+      await this.setState({ disabled: 'disabled' });
+      await this.setState({ orderButton: 'Fill in Form' });
     }
 
   }
 
   async handleChange() {
-    debugger;
     const RegexcheckNum = RegExp(/^[0-9]*$/);
     const RegexEmpty = RegExp(/^$/);
+    const value = event.target.value;
 
     switch (event.target.name) {
       case 'phone':
         if (RegexcheckNum.test(event.target.value)) {
           await this.setState({ [event.target.name]: event.target.value });
+          await this.setState({ validationphone: '' });
+
           if (RegexEmpty.test(event.target.value)) {
             await this.setState({ validationphone: 'is-invalid' });
+            await this.setState({ status: '* Please enter all required fields' });
           }
         }
         break;
       case 'creditCard':
         if (RegexcheckNum.test(event.target.value)) {
           await this.setState({ [event.target.name]: event.target.value });
+          await this.setState({ validationcreditCard: '' });
+
           if (RegexEmpty.test(event.target.value)) {
             await this.setState({ validationcreditCard: 'is-invalid' });
+            await this.setState({ status: '* Please enter all required fields' });
           }
         }
         break;
       case 'cvv':
         if (RegexcheckNum.test(event.target.value)) {
           await this.setState({ [event.target.name]: event.target.value });
+          await this.setState({ validationcvv: '' });
+
           if (RegexEmpty.test(event.target.value)) {
             await this.setState({ validationcvv: 'is-invalid' });
+            await this.setState({ status: '* Please enter all required fields' });
           }
         }
         break;
       case 'zipcode':
         if (RegexcheckNum.test(event.target.value)) {
           await this.setState({ [event.target.name]: event.target.value });
+          await this.setState({ validationzipcode: '' });
+
           if (RegexEmpty.test(event.target.value)) {
             await this.setState({ validationzipcode: 'is-invalid' });
+            await this.setState({ status: '* Please enter all required fields' });
           }
         }
         break;
       case 'name':
         await this.setState({ [event.target.name]: event.target.value });
+        await this.setState({ validationname: '' });
         if (RegexEmpty.test(event.target.value)) {
           await this.setState({ validationname: 'is-invalid' });
+          await this.setState({ status: '* Please enter all required fields' });
         }
         break;
       case 'shippingAddress':
         await this.setState({ [event.target.name]: event.target.value });
+        await this.setState({ validationshippingAddress: '' });
         if (RegexEmpty.test(event.target.value)) {
           await this.setState({ validationshippingAddress: 'is-invalid' });
+          await this.setState({ status: '* Please enter all required fields' });
         }
         break;
       case 'city':
         await this.setState({ [event.target.name]: event.target.value });
+        await this.setState({ validationcity: '' });
         if (RegexEmpty.test(event.target.value)) {
           await this.setState({ validationcity: 'is-invalid' });
+          await this.setState({ status: '* Please enter all required fields' });
         }
         break;
       case 'creditCardName':
         await this.setState({ [event.target.name]: event.target.value });
+        await this.setState({ validationcreditCardName: '' });
         if (RegexEmpty.test(event.target.value)) {
           await this.setState({ validationcreditCardName: 'is-invalid' });
+          await this.setState({ status: '* Please enter all required fields' });
         }
         break;
       case 'email':
         await this.setState({ [event.target.name]: event.target.value });
+        await this.setState({ validationemail: '' });
         if (RegexEmpty.test(event.target.value)) {
           await this.setState({ validationemail: 'is-invalid' });
+          await this.setState({ status: '* Please enter all required fields' });
+        }
+        break;
+      case 'state':
+        await this.setState({ [event.target.name]: event.target.value });
+        await this.setState({ validationstate: '' });
+        if (value === 'Choose State...') {
+          await this.setState({ validationstate: 'is-invalid' });
+          await this.setState({ status: '* Please enter all required fields' });
+        }
+        break;
+      case 'month':
+        await this.setState({ [event.target.name]: event.target.value });
+        await this.setState({ validationmonth: '' });
+        if (value === 'MM') {
+          await this.setState({ validationmonth: 'is-invalid' });
+          await this.setState({ status: '* Please enter all required fields' });
+        }
+        break;
+      case 'year':
+        await this.setState({ [event.target.name]: event.target.value });
+        await this.setState({ validationyear: '' });
+        if (value === 'YYYY') {
+          await this.setState({ validationyear: 'is-invalid' });
+          await this.setState({ status: '* Please enter all required fields' });
         }
         break;
     }
 
-    this.checkEmpty(event.target.name);
+    this.checkEmpty();
   }
 
   componentDidMount() {
@@ -223,11 +275,11 @@ export default class Checkout extends React.Component {
               <div className="form-row">
                 <div className="form-group w-85 col-xl-6 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="fas fa-city"></i> City: * </label>
-                  <input type="text" className="form-control" placeholder="City" name="city" value={this.state.city} onChange={this.handleChange}></input>
+                  <input type="text" className={`form-control ${this.state.validationcity}`} placeholder="City" name="city" value={this.state.city} onChange={this.handleChange}></input>
                 </div>
                 <div className="form-group w-85 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="fas fa-flag-usa"></i> State: * </label>
-                  <select type="text" className="form-control" placeholder="State" name="state" value={this.state.state} onChange={this.handleChange}>
+                  <select type="text" className={`form-control ${this.state.validationstate}`}placeholder="State" name="state" value={this.state.state} onChange={this.handleChange}>
                     <option defaultValue >Choose State...</option>
                     <option value="AL">Alabama</option>
                     <option value="AK">Alaska</option>
@@ -292,17 +344,17 @@ export default class Checkout extends React.Component {
               <div className="form-row">
                 <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <label><i className="fas fa-address-book"></i> Name on Card: * </label>
-                  <input type="text" className="form-control" placeholder="Name on Card" name="creditCardName" value={this.state.creditCardName} onChange={this.handleChange}></input>
+                  <input type="text" className={`form-control ${this.state.validationcreditCardName}`} placeholder="Name on Card" name="creditCardName" value={this.state.creditCardName} onChange={this.handleChange}></input>
                 </div>
                 <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <label><i className="far fa-credit-card"></i> Credit Card: * </label>
-                  <input type="text" maxLength="20" className="form-control" placeholder="Credit Card Number" name="creditCard" value={this.state.creditCard} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="20" className={`form-control ${this.state.validationcreditCard}`} placeholder="Credit Card Number" name="creditCard" value={this.state.creditCard} onChange={this.handleChange}></input>
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group w-85 col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="far fa-calendar-alt"></i> Month: * </label>
-                  <select type="text" className="form-control" placeholder="Credit Card Number" name="month" value={this.state.month} onChange={this.handleChange}>
+                  <select type="text" className={`form-control ${this.state.validationmonth}`} placeholder="Credit Card Number" name="month" value={this.state.month} onChange={this.handleChange}>
                     <option defaultValue>MM</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -320,7 +372,7 @@ export default class Checkout extends React.Component {
                 </div>
                 <div className="form-group w-85 col-xl-5 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="far fa-calendar-alt"></i> Year: * </label>
-                  <select type="text" className="form-control" placeholder="Credit Card Number" name="year" value={this.state.year} onChange={this.handleChange}>
+                  <select type="text" className={`form-control ${this.state.validationyear}`} placeholder="Credit Card Number" name="year" value={this.state.year} onChange={this.handleChange}>
                     <option defaultValue>YYYY</option>
                     <option value="2020">2020</option>
                     <option value="2021">2021</option>
