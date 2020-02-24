@@ -13,7 +13,7 @@ export default class Checkout extends React.Component {
       year: '',
       cvv: '',
       shippingAddress: '',
-      suit: 'Fill in Form',
+      suit: '',
       city: '',
       state: '',
       zipcode: '',
@@ -21,7 +21,21 @@ export default class Checkout extends React.Component {
       total: '',
       finalTax: '',
       finalTotal: '',
-      disabled: ''
+      disabled: '',
+      orderButton: 'Fill in Form',
+      validationname: '',
+      validationemail: '',
+      validationphone: '',
+      validationshippingAddress: '',
+      validationcity: '',
+      validationstate: '',
+      validationzipcode: '',
+      validationcreditCardName: '',
+      validationcreditCard: '',
+      validationmonth: '',
+      validationyear: '',
+      validationcvv: ''
+
     };
     this.handleChange = this.handleChange.bind(this);
     this.checkEmpty = this.checkEmpty.bind(this);
@@ -46,20 +60,88 @@ export default class Checkout extends React.Component {
 
   checkEmpty() {
     event.preventDefault();
+
     if (this.state.name && this.state.email && this.state.phone && this.state.shippingAddress && this.state.city && this.state.state && this.state.zipcode && this.state.creditCardName && this.state.creditCard && this.state.month && this.state.year && this.state.cvv) {
       this.setState({ disabled: '' });
-      this.setState({ suit: 'Place Order' });
+      this.setState({ orderButton: 'Place Order' });
     } else {
       this.setState({ disabled: 'disabled' });
-      this.setState({ suit: 'Fill in Form' });
+      this.setState({ orderButton: 'Fill in Form' });
     }
+
   }
 
   async handleChange() {
-    const newState = { };
-    newState[event.target.name] = event.target.value;
-    await this.setState(newState);
-    this.checkEmpty();
+    debugger;
+    const RegexcheckNum = RegExp(/^[0-9]*$/);
+    const RegexEmpty = RegExp(/^$/);
+
+    switch (event.target.name) {
+      case 'phone':
+        if (RegexcheckNum.test(event.target.value)) {
+          await this.setState({ [event.target.name]: event.target.value });
+          if (RegexEmpty.test(event.target.value)) {
+            await this.setState({ validationphone: 'is-invalid' });
+          }
+        }
+        break;
+      case 'creditCard':
+        if (RegexcheckNum.test(event.target.value)) {
+          await this.setState({ [event.target.name]: event.target.value });
+          if (RegexEmpty.test(event.target.value)) {
+            await this.setState({ validationcreditCard: 'is-invalid' });
+          }
+        }
+        break;
+      case 'cvv':
+        if (RegexcheckNum.test(event.target.value)) {
+          await this.setState({ [event.target.name]: event.target.value });
+          if (RegexEmpty.test(event.target.value)) {
+            await this.setState({ validationcvv: 'is-invalid' });
+          }
+        }
+        break;
+      case 'zipcode':
+        if (RegexcheckNum.test(event.target.value)) {
+          await this.setState({ [event.target.name]: event.target.value });
+          if (RegexEmpty.test(event.target.value)) {
+            await this.setState({ validationzipcode: 'is-invalid' });
+          }
+        }
+        break;
+      case 'name':
+        await this.setState({ [event.target.name]: event.target.value });
+        if (RegexEmpty.test(event.target.value)) {
+          await this.setState({ validationname: 'is-invalid' });
+        }
+        break;
+      case 'shippingAddress':
+        await this.setState({ [event.target.name]: event.target.value });
+        if (RegexEmpty.test(event.target.value)) {
+          await this.setState({ validationshippingAddress: 'is-invalid' });
+        }
+        break;
+      case 'city':
+        await this.setState({ [event.target.name]: event.target.value });
+        if (RegexEmpty.test(event.target.value)) {
+          await this.setState({ validationcity: 'is-invalid' });
+        }
+        break;
+      case 'creditCardName':
+        await this.setState({ [event.target.name]: event.target.value });
+        if (RegexEmpty.test(event.target.value)) {
+          await this.setState({ validationcreditCardName: 'is-invalid' });
+        }
+        break;
+      case 'email':
+        await this.setState({ [event.target.name]: event.target.value });
+        if (RegexEmpty.test(event.target.value)) {
+          await this.setState({ validationemail: 'is-invalid' });
+        }
+        break;
+    }
+
+    this.checkEmpty(event.target.name);
   }
 
   componentDidMount() {
@@ -113,23 +195,23 @@ export default class Checkout extends React.Component {
               <div className="form-row">
                 <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <label><i className="fas fa-user"></i> Name: * </label>
-                  <input type="text" maxLength="65" className="form-control" placeholder="Your Name" name="name" value={this.state.name} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="65" className={`form-control ${this.state.validationname}`} placeholder="Your Name" name="name" value={this.state.name} onChange={this.handleChange}></input>
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-xl-6 col-lg-5 col-md-5 col-sm-5 col-12">
                   <label><i className="fas fa-at"></i> Email: * </label>
-                  <input type="text" maxLength="254" className="form-control" placeholder="Your Email" name="email" value={this.state.email} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="254" className={`form-control ${this.state.validationemail}`} placeholder="Your Email" name="email" value={this.state.email} onChange={this.handleChange}></input>
                 </div>
                 <div className="form-group col-xl-6 col-lg-5 col-md-5 col-sm-5 col-12">
                   <label><i className="fas fa-phone"></i> Phone Number: * </label>
-                  <input type="tel" maxLength="11" className="form-control" placeholder="Your phone #" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                  <input type="tel" maxLength="11" className={`form-control ${this.state.validationphone}`} placeholder="Your phone #" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group w-85 col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
                   <label><i className="fas fa-map-marked-alt"></i> Address: * </label>
-                  <input type="text" className="form-control" placeholder="123 New St." name="shippingAddress" value={this.state.shippingAddress} onChange={this.handleChange}></input>
+                  <input type="text" className={`form-control ${this.state.validationshippingAddress}`} placeholder="123 New St." name="shippingAddress" value={this.state.shippingAddress} onChange={this.handleChange}></input>
                 </div>
               </div>
               <div className="form-row">
@@ -202,7 +284,7 @@ export default class Checkout extends React.Component {
                 </div>
                 <div className="form-group w-85 col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
                   <label><i className="fab fa-usps"></i> Zipcode: * </label>
-                  <input type="text" maxLength="5" className="form-control" placeholder="Zipcode" name="zipcode" value={this.state.zipcode} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="5" className={`form-control ${this.state.validationzipcode}`} placeholder="Zipcode" name="zipcode" value={this.state.zipcode} onChange={this.handleChange}></input>
                 </div>
               </div>
               <hr></hr>
@@ -214,7 +296,7 @@ export default class Checkout extends React.Component {
                 </div>
                 <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <label><i className="far fa-credit-card"></i> Credit Card: * </label>
-                  <input type="text" className="form-control" placeholder="Credit Card Number" name="creditCard" value={this.state.creditCard} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="20" className="form-control" placeholder="Credit Card Number" name="creditCard" value={this.state.creditCard} onChange={this.handleChange}></input>
                 </div>
               </div>
               <div className="form-row">
@@ -255,7 +337,7 @@ export default class Checkout extends React.Component {
                 </div>
                 <div className="form-group w-85 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="fas fa-unlock"></i> CVV: * </label>
-                  <input type="text" className="form-control" placeholder="CVV" name="cvv" value={this.state.cvv} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="3" pattern="\d*" className={`form-control ${this.state.validationcvv}`} placeholder="CVV" name="cvv" value={this.state.cvv} onChange={this.handleChange}></input>
                 </div>
               </div>
               <p className="text-danger">* required</p>
@@ -278,7 +360,7 @@ export default class Checkout extends React.Component {
           <button onClick={this.back} className="d-block btn btn-outline-dark"><i className="far fa-arrow-alt-circle-left fa-lg"></i> Back to Cart</button>
         </div>
         <div className="d-flex justify-content-center mt-3">
-          <button onClick={this.checkEmpty} className="btn btn-outline-success mb-3" disabled={this.state.disabled}><i className="fas fa-check"></i> {this.state.suit}</button>
+          <button onClick={this.checkEmpty} className="btn btn-outline-success mb-3" disabled={this.state.disabled}><i className="fas fa-check"></i> {this.state.orderButton}</button>
         </div>
       </div>
     );

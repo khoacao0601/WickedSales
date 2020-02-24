@@ -113,6 +113,7 @@ div.short {
 /**  Hover Zoom **/
 .hoverZoom:hover {
     transform: scale(1.1); 
+    cursor: pointer;
   }
 
 .cartIcon:hover {
@@ -143,4 +144,19 @@ div.short {
     text-decoration: underline;
 }
 
+.fadeOut {
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.384) ;
+    left: 0;
+    top: 0;
+}
 
+.closeButton{
+    color: gray;
+}
+
+.closeButton:hover {
+    color: black;
+    cursor: pointer;
+    transform: scale(2); 
+}
