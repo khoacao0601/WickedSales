@@ -41,6 +41,7 @@ export default class Checkout extends React.Component {
     this.checkEmpty = this.checkEmpty.bind(this);
     this.back = this.back.bind(this);
     this.thankyou = this.thankyou.bind(this);
+    this.sendInfos = this.sendInfos.bind(this);
   }
 
   sendInfos() {
@@ -59,8 +60,6 @@ export default class Checkout extends React.Component {
   }
 
   async checkEmpty() {
-    debugger;
-
     if (this.state.name && this.state.email && this.state.phone && this.state.shippingAddress && this.state.city && this.state.state && this.state.zipcode && this.state.creditCardName && this.state.creditCard && this.state.month && this.state.year && this.state.cvv) {
       if (this.state.year === 'YYYY' || this.state.state === 'Choose State...' || this.state.month === 'MM') {
         await this.setState({ disabled: 'disabled' });
@@ -412,7 +411,7 @@ export default class Checkout extends React.Component {
           <button onClick={this.back} className="d-block btn btn-outline-dark"><i className="far fa-arrow-alt-circle-left fa-lg"></i> Back to Cart</button>
         </div>
         <div className="d-flex justify-content-center mt-3">
-          <button onClick={this.checkEmpty} className="btn btn-outline-success mb-3" disabled={this.state.disabled}><i className="fas fa-check"></i> {this.state.orderButton}</button>
+          <button onClick={this.sendInfos} className="btn btn-outline-success mb-3" disabled={this.state.disabled}><i className="fas fa-check"></i> {this.state.orderButton}</button>
         </div>
       </div>
     );
