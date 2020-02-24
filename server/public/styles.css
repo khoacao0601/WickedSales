@@ -139,9 +139,14 @@ div.short {
     text-decoration: underline;
 }
 
+.continue{
+    text-decoration: underline;
+    font-size: large;
+}
 .continue:hover {
     cursor: pointer;
-    text-decoration: underline;
+    color: blue;
+    transform: scale(1.5);
 }
 
 .fadeOut {
