@@ -23,7 +23,7 @@ export default class Checkout extends React.Component {
       finalTotal: '',
       disabled: '',
       orderButton: 'Fill in Form',
-      validationname: '',
+      validationname: 'hide',
       validationemail: '',
       validationphone: '',
       validationshippingAddress: '',
@@ -61,7 +61,7 @@ export default class Checkout extends React.Component {
 
   async checkEmpty() {
     if (this.state.name && this.state.email && this.state.phone && this.state.shippingAddress && this.state.city && this.state.state && this.state.zipcode && this.state.creditCardName && this.state.creditCard && this.state.month && this.state.year && this.state.cvv) {
-      if (this.state.year === 'YYYY' || this.state.state === 'Choose State...' || this.state.month === 'MM') {
+      if (this.state.year === 'YYYY' || this.state.state === 'Choose State...' || this.state.validationmonth === 'MM' || this.state.validationname === 'is-invalid' || this.state.validationemail === 'is-invalid' || this.state.validationphone === 'is-invalid' || this.state.validationshippingAddress === 'is-invalid' || this.state.validationcity === 'is-invalid' || this.state.validationzipcode === 'is-invalid' || this.state.validationcreditCardName === 'is-invalid' || this.state.validationcreditCard === 'is-invalid' || this.state.validationcvv === 'is-invalid') {
         await this.setState({ disabled: 'disabled' });
         await this.setState({ orderButton: 'Fill in Form' });
       } else {
@@ -79,6 +79,7 @@ export default class Checkout extends React.Component {
   async handleChange() {
     const RegexcheckNum = RegExp(/^[0-9]*$/);
     const RegexEmpty = RegExp(/^$/);
+    const RegexcheckEmail = RegExp(/^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     const value = event.target.value;
 
     switch (event.target.name) {
@@ -86,8 +87,7 @@ export default class Checkout extends React.Component {
         if (RegexcheckNum.test(event.target.value)) {
           await this.setState({ [event.target.name]: event.target.value });
           await this.setState({ validationphone: '' });
-
-          if (RegexEmpty.test(event.target.value)) {
+          if (RegexEmpty.test(event.target.value) || this.state.phone.length < 10) {
             await this.setState({ validationphone: 'is-invalid' });
             await this.setState({ status: '* Please enter all required fields' });
           }
@@ -97,8 +97,7 @@ export default class Checkout extends React.Component {
         if (RegexcheckNum.test(event.target.value)) {
           await this.setState({ [event.target.name]: event.target.value });
           await this.setState({ validationcreditCard: '' });
-
-          if (RegexEmpty.test(event.target.value)) {
+          if (RegexEmpty.test(event.target.value) || this.state.creditCard.length < 16) {
             await this.setState({ validationcreditCard: 'is-invalid' });
             await this.setState({ status: '* Please enter all required fields' });
           }
@@ -108,8 +107,7 @@ export default class Checkout extends React.Component {
         if (RegexcheckNum.test(event.target.value)) {
           await this.setState({ [event.target.name]: event.target.value });
           await this.setState({ validationcvv: '' });
-
-          if (RegexEmpty.test(event.target.value)) {
+          if (RegexEmpty.test(event.target.value) || this.state.cvv.length < 3) {
             await this.setState({ validationcvv: 'is-invalid' });
             await this.setState({ status: '* Please enter all required fields' });
           }
@@ -119,8 +117,7 @@ export default class Checkout extends React.Component {
         if (RegexcheckNum.test(event.target.value)) {
           await this.setState({ [event.target.name]: event.target.value });
           await this.setState({ validationzipcode: '' });
-
-          if (RegexEmpty.test(event.target.value)) {
+          if (RegexEmpty.test(event.target.value) || this.state.zipcode.length < 5) {
             await this.setState({ validationzipcode: 'is-invalid' });
             await this.setState({ status: '* Please enter all required fields' });
           }
@@ -129,7 +126,7 @@ export default class Checkout extends React.Component {
       case 'name':
         await this.setState({ [event.target.name]: event.target.value });
         await this.setState({ validationname: '' });
-        if (RegexEmpty.test(event.target.value)) {
+        if (RegexEmpty.test(event.target.value) || this.state.name.length < 5) {
           await this.setState({ validationname: 'is-invalid' });
           await this.setState({ status: '* Please enter all required fields' });
         }
@@ -137,7 +134,7 @@ export default class Checkout extends React.Component {
       case 'shippingAddress':
         await this.setState({ [event.target.name]: event.target.value });
         await this.setState({ validationshippingAddress: '' });
-        if (RegexEmpty.test(event.target.value)) {
+        if (RegexEmpty.test(event.target.value) || this.state.shippingAddress < 6) {
           await this.setState({ validationshippingAddress: 'is-invalid' });
           await this.setState({ status: '* Please enter all required fields' });
         }
@@ -153,7 +150,7 @@ export default class Checkout extends React.Component {
       case 'creditCardName':
         await this.setState({ [event.target.name]: event.target.value });
         await this.setState({ validationcreditCardName: '' });
-        if (RegexEmpty.test(event.target.value)) {
+        if (RegexEmpty.test(event.target.value) || this.state.creditCardName.length < 6) {
           await this.setState({ validationcreditCardName: 'is-invalid' });
           await this.setState({ status: '* Please enter all required fields' });
         }
@@ -161,7 +158,7 @@ export default class Checkout extends React.Component {
       case 'email':
         await this.setState({ [event.target.name]: event.target.value });
         await this.setState({ validationemail: '' });
-        if (RegexEmpty.test(event.target.value)) {
+        if (RegexEmpty.test(event.target.value) || !RegexcheckEmail.test(event.target.value)) {
           await this.setState({ validationemail: 'is-invalid' });
           await this.setState({ status: '* Please enter all required fields' });
         }
@@ -247,22 +244,26 @@ export default class Checkout extends React.Component {
                 <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <label><i className="fas fa-user"></i> Name: * </label>
                   <input type="text" maxLength="65" className={`form-control ${this.state.validationname}`} placeholder="Your Name" name="name" value={this.state.name} onChange={this.handleChange}></input>
+                  <p className='invalid-feedback'>Must be at least 5 characters.</p>
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-xl-6 col-lg-5 col-md-5 col-sm-5 col-12">
                   <label><i className="fas fa-at"></i> Email: * </label>
                   <input type="text" maxLength="254" className={`form-control ${this.state.validationemail}`} placeholder="Your Email" name="email" value={this.state.email} onChange={this.handleChange}></input>
+                  <p className='invalid-feedback'>Please enter a valid email.</p>
                 </div>
                 <div className="form-group col-xl-6 col-lg-5 col-md-5 col-sm-5 col-12">
                   <label><i className="fas fa-phone"></i> Phone Number: * </label>
-                  <input type="tel" maxLength="11" className={`form-control ${this.state.validationphone}`} placeholder="Your phone #" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                  <input type="tel" maxLength="10" className={`form-control ${this.state.validationphone}`} placeholder="Your phone #" name="phone" value={this.state.phone} onChange={this.handleChange}></input>
+                  <p className='invalid-feedback'>Please enter a valid phone number (##########).</p>
                 </div>
               </div>
               <div className="form-row">
                 <div className="form-group w-85 col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
                   <label><i className="fas fa-map-marked-alt"></i> Address: * </label>
                   <input type="text" className={`form-control ${this.state.validationshippingAddress}`} placeholder="123 New St." name="shippingAddress" value={this.state.shippingAddress} onChange={this.handleChange}></input>
+                  <p className='invalid-feedback'>Please enter a valid address.</p>
                 </div>
               </div>
               <div className="form-row">
@@ -332,10 +333,12 @@ export default class Checkout extends React.Component {
                     <option value="WI">Wisconsin</option>
                     <option value="WY">Wyoming</option>
                   </select>
+                  <p className='invalid-feedback'>Please choose a year.</p>
                 </div>
                 <div className="form-group w-85 col-xl-3 col-lg-3 col-md-4 col-sm-4 col-12">
                   <label><i className="fab fa-usps"></i> Zipcode: * </label>
                   <input type="text" maxLength="5" className={`form-control ${this.state.validationzipcode}`} placeholder="Zipcode" name="zipcode" value={this.state.zipcode} onChange={this.handleChange}></input>
+                  <p className='invalid-feedback'>Please enter a valid Zipcode.</p>
                 </div>
               </div>
               <hr></hr>
@@ -344,10 +347,12 @@ export default class Checkout extends React.Component {
                 <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <label><i className="fas fa-address-book"></i> Name on Card: * </label>
                   <input type="text" className={`form-control ${this.state.validationcreditCardName}`} placeholder="Name on Card" name="creditCardName" value={this.state.creditCardName} onChange={this.handleChange}></input>
+                  <p className='invalid-feedback'>Must be at least 5 characters.</p>
                 </div>
                 <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <label><i className="far fa-credit-card"></i> Credit Card: * </label>
                   <input type="text" maxLength="20" className={`form-control ${this.state.validationcreditCard}`} placeholder="Credit Card Number" name="creditCard" value={this.state.creditCard} onChange={this.handleChange}></input>
+                  <p className='invalid-feedback'>Please enter a valid card number.</p>
                 </div>
               </div>
               <div className="form-row">
@@ -368,6 +373,7 @@ export default class Checkout extends React.Component {
                     <option value="11">11</option>
                     <option value="12">12</option>
                   </select>
+                  <p className='invalid-feedback'>Please choose a month.</p>
                 </div>
                 <div className="form-group w-85 col-xl-5 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="far fa-calendar-alt"></i> Year: * </label>
@@ -385,10 +391,12 @@ export default class Checkout extends React.Component {
                     <option value="2029">2029</option>
                     <option value="2029">2030</option>
                   </select>
+                  <p className='invalid-feedback'>Please choose a year.</p>
                 </div>
                 <div className="form-group w-85 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="fas fa-unlock"></i> CVV: * </label>
                   <input type="text" maxLength="3" pattern="\d*" className={`form-control ${this.state.validationcvv}`} placeholder="CVV" name="cvv" value={this.state.cvv} onChange={this.handleChange}></input>
+                  <p className='invalid-feedback'>Please enter a valid CVV.</p>
                 </div>
               </div>
               <p className="text-danger">* required</p>
