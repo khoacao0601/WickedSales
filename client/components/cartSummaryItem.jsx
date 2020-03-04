@@ -21,7 +21,11 @@ export default class CartSummaryItem extends React.Component {
   }
 
   deleteOne() {
-    return this.props.remove(this.props.item.cartItemId);
+    if (this.props.item.quanity > 1) {
+      return this.props.remove(this.props.item.cartItemId);
+    } if (this.props.item.quanity === 1) {
+      return this.setState({ showModal: !this.state.showModal });
+    }
   }
 
   addOne() {
