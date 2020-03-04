@@ -79,6 +79,7 @@ export default class Checkout extends React.Component {
   async handleChange() {
     const RegexcheckNum = RegExp(/^[0-9]*$/);
     const RegexEmpty = RegExp(/^$/);
+    const RegexWhitespace = RegExp(/\s+$/, '');
     const RegexcheckEmail = RegExp(/^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
     const value = event.target.value;
 
@@ -126,7 +127,7 @@ export default class Checkout extends React.Component {
       case 'name':
         await this.setState({ [event.target.name]: event.target.value });
         await this.setState({ validationname: '' });
-        if (RegexEmpty.test(event.target.value) || this.state.name.length < 5) {
+        if (RegexEmpty.test(event.target.value) || this.state.name.length < 5 || RegexWhitespace.test(event.target.value)) {
           await this.setState({ validationname: 'is-invalid' });
           await this.setState({ status: '* Please enter all required fields' });
         }
@@ -134,7 +135,7 @@ export default class Checkout extends React.Component {
       case 'shippingAddress':
         await this.setState({ [event.target.name]: event.target.value });
         await this.setState({ validationshippingAddress: '' });
-        if (RegexEmpty.test(event.target.value) || this.state.shippingAddress < 6) {
+        if (RegexEmpty.test(event.target.value) || this.state.shippingAddress.length < 6 || RegexWhitespace.test(event.target.value)) {
           await this.setState({ validationshippingAddress: 'is-invalid' });
           await this.setState({ status: '* Please enter all required fields' });
         }
@@ -142,7 +143,7 @@ export default class Checkout extends React.Component {
       case 'city':
         await this.setState({ [event.target.name]: event.target.value });
         await this.setState({ validationcity: '' });
-        if (RegexEmpty.test(event.target.value)) {
+        if (RegexEmpty.test(event.target.value) || this.state.city.length < 3 || RegexWhitespace.test(event.target.value)) {
           await this.setState({ validationcity: 'is-invalid' });
           await this.setState({ status: '* Please enter all required fields' });
         }
@@ -262,7 +263,7 @@ export default class Checkout extends React.Component {
               <div className="form-row">
                 <div className="form-group w-85 col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
                   <label><i className="fas fa-map-marked-alt"></i> Address: * </label>
-                  <input type="text" className={`form-control ${this.state.validationshippingAddress}`} placeholder="123 New St." name="shippingAddress" value={this.state.shippingAddress} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="156" className={`form-control ${this.state.validationshippingAddress}`} placeholder="123 New St." name="shippingAddress" value={this.state.shippingAddress} onChange={this.handleChange}></input>
                   <p className='invalid-feedback'>Please enter a valid address.</p>
                 </div>
               </div>
@@ -275,7 +276,8 @@ export default class Checkout extends React.Component {
               <div className="form-row">
                 <div className="form-group w-85 col-xl-6 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="fas fa-city"></i> City: * </label>
-                  <input type="text" className={`form-control ${this.state.validationcity}`} placeholder="City" name="city" value={this.state.city} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="50" className={`form-control ${this.state.validationcity}`} placeholder="City" name="city" value={this.state.city} onChange={this.handleChange}></input>
+                  <div className="invalid-feedback">Please enter a valid city.</div>
                 </div>
                 <div className="form-group w-85 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="fas fa-flag-usa"></i> State: * </label>
@@ -346,7 +348,7 @@ export default class Checkout extends React.Component {
               <div className="form-row">
                 <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                   <label><i className="fas fa-address-book"></i> Name on Card: * </label>
-                  <input type="text" className={`form-control ${this.state.validationcreditCardName}`} placeholder="Name on Card" name="creditCardName" value={this.state.creditCardName} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="65" className={`form-control ${this.state.validationcreditCardName}`} placeholder="Name on Card" name="creditCardName" value={this.state.creditCardName} onChange={this.handleChange}></input>
                   <p className='invalid-feedback'>Must be at least 5 characters.</p>
                 </div>
                 <div className="form-group w-85 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -389,13 +391,13 @@ export default class Checkout extends React.Component {
                     <option value="2027">2027</option>
                     <option value="2028">2028</option>
                     <option value="2029">2029</option>
-                    <option value="2029">2030</option>
+                    <option value="2030">2030</option>
                   </select>
                   <p className='invalid-feedback'>Please choose a year.</p>
                 </div>
                 <div className="form-group w-85 col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12">
                   <label><i className="fas fa-unlock"></i> CVV: * </label>
-                  <input type="text" maxLength="3" pattern="\d*" className={`form-control ${this.state.validationcvv}`} placeholder="CVV" name="cvv" value={this.state.cvv} onChange={this.handleChange}></input>
+                  <input type="text" maxLength="4" pattern="\d*" className={`form-control ${this.state.validationcvv}`} placeholder="CVV" name="cvv" value={this.state.cvv} onChange={this.handleChange}></input>
                   <p className='invalid-feedback'>Please enter a valid CVV.</p>
                 </div>
               </div>
