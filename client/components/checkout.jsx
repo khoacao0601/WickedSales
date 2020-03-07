@@ -151,7 +151,7 @@ export default class Checkout extends React.Component {
       case 'creditCardName':
         await this.setState({ [event.target.name]: event.target.value });
         await this.setState({ validationcreditCardName: '' });
-        if (RegexEmpty.test(event.target.value) || this.state.creditCardName.length < 6) {
+        if (RegexEmpty.test(event.target.value) || this.state.creditCardName.length < 6 || RegexWhitespace.test(event.target.value)) {
           await this.setState({ validationcreditCardName: 'is-invalid' });
           await this.setState({ status: '* Please enter all required fields' });
         }
