@@ -39,4 +39,4 @@ Try the application live at https://wickedsales.khoacao.com
 - Check that the root directory of the server is set to the public folder
 - Initiate the dev server <br/>
 `$ npm run dev`
-- Go to localhost:5000 and enjoy 
+- Go to localhost:5000 and enjoy ***
