@@ -1,7 +1,5 @@
 import React from 'react';
 import CartSummaryItem from './cartSummaryItem';
-012345
-6789
 
 export default class CartSummary extends React.Component {
 
