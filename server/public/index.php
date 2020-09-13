@@ -6,7 +6,6 @@ switch ($request['path']) {
   case '/':
     readfile('index.html');
     exit;
-    0123456789
   case '/api/test':
   case '/api/products':
   case '/api/cart':
