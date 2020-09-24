@@ -6,7 +6,6 @@
         $response['body'] = $placeOrder;
         send($response);
     }
-//0123456789
 
     if($request['method'] === 'DELETE') {
         $cart = get_cart();
