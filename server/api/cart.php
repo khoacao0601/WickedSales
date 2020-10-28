@@ -2,7 +2,22 @@
 
     $last_ID_intoCart = null;
 
- 
+   if ($request['method'] === 'GET') {
+        if(isset($_SESSION['cart_id'])){
+            $link = get_db_link();
+            $sqlCart = 
+        "SELECT * FROM cartItems JOIN products ON cartItems.productId = products.productId WHERE cartItems.cartId = {$_SESSION['cart_id']}";
+        $resultCart = mysqli_query($link,$sqlCart);
+        $fetch_Cart = mysqli_fetch_all($resultCart, MYSQLI_ASSOC);
+        $response['body']= $fetch_Cart;
+        send($response);
+        } else {
+            $response['body'] = [];
+            send($response);
+        }
+    }
+
+0123456789
     
     if ($request['method'] === 'POST') {
         if(!isset($request['body']['productId'])){
