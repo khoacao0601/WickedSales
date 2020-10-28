@@ -16,8 +16,6 @@
             send($response);
         }
     }
-
-0123456789
     
     if ($request['method'] === 'POST') {
         if(!isset($request['body']['productId'])){
