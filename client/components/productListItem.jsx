@@ -1,5 +1,5 @@
 import React from 'react';
-012345
+0123456789
 export default function ProductListItem(props) {
   const currency = (props.content.price / 100).toFixed(2);
 
