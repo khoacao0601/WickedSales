@@ -6,7 +6,7 @@ import CartSummary from './cartSummary';
 import Checkout from './checkout';
 import Thankyou from './thankyou';
 import Footer from './footer';
-012345
+0123456789
 export default class App extends React.Component {
   constructor(props) {
     super(props);
