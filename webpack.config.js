@@ -5,23 +5,28 @@ const clientPath = path.resolve(__dirname, 'client');
 const publicPath = path.resolve(__dirname, 'server/public');
 
 module.exports = {
+  mode: 'production',
+  entry: clientPath,
   resolve: { extensions: ['.js', '.jsx'] },
-  entry: clientPath, // client/index.jsx
   output: {
-    path: publicPath, // keep same as express static path
+    path: publicPath,
     filename: 'main.js',
     hashFunction: 'xxhash64',
-    clean: true // remove old folder before the build
+    clean: true
   },
   module: {
-    rules: [{
-      test: /\.jsx?$/,
-      include: clientPath,
-      use: {
-        loader: 'babel-loader',
-        options: { plugins: ['@babel/plugin-transform-react-jsx'] }
+    rules: [
+      {
+        test: /\.jsx?$/,
+        include: clientPath,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: ['@babel/plugin-transform-react-jsx']
+          }
+        }
       }
-    }]
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -29,6 +34,17 @@ module.exports = {
       filename: 'index.html' // => server/public/index.html
     })
   ],
-  devtool: 'source-map'
-  // devServer only use in local, Vercel won't use it
+  devtool: 'source-map',
+
+  // only use for dev local (Vercel won't use it)
+  devServer: {
+    host: '0.0.0.0',
+    port: 5000,
+    static: { directory: publicPath, watch: true },
+    historyApiFallback: true,
+    hot: true,
+    client: { logging: 'warn' },
+    devMiddleware: { stats: 'minimal' },
+    proxy: { '/api': { target: 'http://localhost:9000', changeOrigin: true } }
+  }
 };
