@@ -1,45 +1,34 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const clientPath = path.resolve(__dirname, 'client');
 const publicPath = path.resolve(__dirname, 'server/public');
 
 module.exports = {
-  resolve: {
-    extensions: ['.js', '.jsx']
-  },
-  entry: clientPath,
+  resolve: { extensions: ['.js', '.jsx'] },
+  entry: clientPath, // client/index.jsx
   output: {
-    path: publicPath,
-    hashFunction: 'xxhash64'
+    path: publicPath, // keep same as express static path
+    filename: 'main.js',
+    hashFunction: 'xxhash64',
+    clean: true // remove old folder before the build
   },
   module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        include: clientPath,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            plugins: [
-              '@babel/plugin-transform-react-jsx'
-            ]
-          }
-        }
+    rules: [{
+      test: /\.jsx?$/,
+      include: clientPath,
+      use: {
+        loader: 'babel-loader',
+        options: { plugins: ['@babel/plugin-transform-react-jsx'] }
       }
-    ]
+    }]
   },
-  devtool: 'source-map',
-  devServer: {
-    host: '0.0.0.0',
-    port: 5000,
-    contentBase: publicPath,
-    historyApiFallback: true,
-    watchContentBase: true,
-    stats: 'minimal',
-    proxy: {
-      '/api': {
-        target: 'http://localhost:9000'
-      }
-    }
-  }
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'client/index.html'),
+      filename: 'index.html' // => server/public/index.html
+    })
+  ],
+  devtool: 'source-map'
+  // devServer only use in local, Vercel won't use it
 };
