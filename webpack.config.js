@@ -6,12 +6,12 @@ const publicPath = path.resolve(__dirname, 'server/public');
 
 module.exports = {
   resolve: { extensions: ['.js', '.jsx'] },
-  entry: clientPath, // client/index.jsx
+  entry: clientPath,
   output: {
-    path: publicPath, // keep same as express static path
+    path: publicPath,
     filename: 'main.js',
     hashFunction: 'xxhash64',
-    clean: true // remove old folder before the build
+    clean: true
   },
   module: {
     rules: [{
@@ -26,9 +26,20 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'client/index.html'),
-      filename: 'index.html' // => server/public/index.html
+      filename: 'index.html'
     })
   ],
-  devtool: 'source-map'
-  // devServer only use in local, Vercel won't use it
+  devtool: 'source-map',
+
+  // v4 API
+  devServer: {
+    host: '0.0.0.0',
+    port: 5000,
+    static: { directory: publicPath, watch: true }, // replace for contentBase/watchContentBase
+    historyApiFallback: true,
+    hot: true,
+    client: { logging: 'warn' },
+    devMiddleware: { stats: 'minimal' },
+    proxy: { '/api': { target: 'http://localhost:9000', changeOrigin: true } }
+  }
 };
