@@ -9,7 +9,8 @@ module.exports = {
   },
   entry: clientPath,
   output: {
-    path: publicPath
+    path: publicPath,
+    hashFunction: 'xxhash64'
   },
   module: {
     rules: [
